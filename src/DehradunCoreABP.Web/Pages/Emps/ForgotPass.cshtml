@@ -1,0 +1,99 @@
+﻿@page
+@model DehradunCoreABP.Web.Pages.Emps.ForgotPassModel
+@{
+}
+@{ Layout = null; }
+
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="~/css/SignIn.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/scroll.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <style>
+        #btn {
+            color: white;
+            /* border-radius:8px; */
+            margin-top: 3%;
+            background-color: #86bc42;
+            border-radius: 30px;
+            padding: 1% 5px;
+        }
+    </style>
+
+</head>
+
+<body style="background-color: white;background-image: none;" class="example">
+    <nav style="background: white;color: grey;padding: 15px;box-shadow: 10px 10px 5px rgb(212, 211, 211);">
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars" style="color: black;"></i>
+
+        </label>
+        <!-- <label class="logo"><img src="images/logo.jpg" style="width: 12%;border-radius: 4%;margin-left: 0%;opacity: 1;z-index: 2;"></label> -->
+        <ul>
+            <li><a href="/">HOME</a></li>
+            <li><a href="About">ABOUT DSCL</a></li>
+            <li><a class="active" href="SignIn">SIGN IN</a></li>
+            <li><a id="btn" style="padding:10px" href="City">CITY GIS</a></li>
+        </ul>
+    </nav>
+    <br><br>
+    <div id="backcont" style="z-index: 1;">
+        <form method="POST" action="@Url.Page("/Emps/ForgotPass")">
+            <p id="signupdata"
+               style="width:55%;float: right;color: black;font-family: Optima;  word-spacing: 5px;margin-top: 20px;">
+
+                <span style="color:#86bc42;font-size: x-large;font-weight: bold;text-decoration: underline;">
+                    Forgot Username
+                    / Password
+                </span><br><br><br>
+                <label style="font-family: sans-serif;">User Name</label><br><br>
+                <i class="fa fa-envelope" aria-hidden="true"></i> <input type="text" placeholder="Email" id="Email" name="Email"
+                                                                         style="width: 90%;padding: 1%;" required> <br><br><br>
+                <!-- <a href="#" -->
+                <!-- style="color:white;background-color: #86bc42;border-radius: 30px;text-decoration: none;padding: 1.5% 2%;font-weight: bold;">SUBMIT -->
+                <!-- <i class="fa fa-arrow-right" aria-hidden="true"></i></a> -->
+                <input type="submit" value="Submit" style="color:white;background-color: #86bc42;border-radius: 30px;text-decoration: none;padding: 1.5% 2%;font-weight: bold;">
+            </p>
+
+
+            <figcaption id="figcap1" style="color: grey;font-family:Arial;margin-left: 5%;font-size: small;">
+                ENTER YOUR
+                CREDENTIALS BELOW
+            </figcaption>
+            <figcaption id="figcap1"
+                        style="color: #434a54;font-family:Arial;margin-left: 5%;font-size: x-large;font-weight: bold;">
+                LOGIN TO YOUR
+                ACCOUNT
+            </figcaption>
+
+            <img id="backimg" src="~/images/loginimg.png">
+
+             @*<p id="signupdataresonsive"
+                style="width:100%;float: left;margin-left:5%;color: black;font-family: Optima;  word-spacing: 5px;margin-top: 20px;">
+
+                <span style="color:#86bc42;font-size: x-large;font-weight: bold;text-decoration: underline;">Forgot Username
+                    / Password</span><br><br><br>
+                <label style="font-family: sans-serif;">User Name</label><br><br>
+                <i class="fa fa-envelope" aria-hidden="true"></i> <input type="email" placeholder="Email"
+                    style="width: 90%;padding: 1%;" required> <br><br><br>
+                 <a href="#"
+                    style="color:white;background-color: #86bc42;border-radius: 30px;text-decoration: none;padding: 1.5% 2%;font-weight: bold;">SUBMIT
+                    <i class="fa fa-arrow-right" aria-hidden="true"></i></a> 
+             <input type="submit" value="Submit" style="color:white;background-color: #86bc42;border-radius: 30px;text-decoration: none;padding: 1.5% 2%;font-weight: bold;"> 
+             </p>*@ 
+        </form>
+    </div>
+
+</body>
+
+</html>

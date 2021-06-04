@@ -1,0 +1,732 @@
+﻿@page
+@model DehradunCoreABP.Web.Pages.Emps.CityModel
+@{
+}
+
+@{
+    Layout = null;
+}
+
+<html>
+<head>
+    <title>Dehradun-CityGis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.6.2/animate.min.css" rel="stylesheet">
+
+
+    <link href="~/css/Nav.css" rel="stylesheet" />
+    <link href="~/css/forcitygis.css" rel="stylesheet" />
+    <link href="~/css/main1.css" rel="stylesheet" />
+
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="stylesheet" href="http://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css"
+          type="text/css">
+    <link href="~/css/scroll.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en'
+            }, 'google_translate_element');
+        }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-a11y="true"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <style>
+        #advs {
+            background-color: #0082e6;
+            height: 30px;
+            color: white;
+            font-size: 25px;
+            text-align: center;
+        }
+
+        .optli {
+            font-size: 25px;
+            float: left;
+        }
+
+        #nextadvs {
+            background-color: #E1E1E1;
+        }
+
+        .btnA {
+            font-size: 23px;
+            outline: 0;
+            border: 0;
+            margin-top: 1%;
+            cursor: pointer;
+        }
+
+        #btn1 {
+            background-color: white;
+            color: black;
+        }
+
+        #btn2 {
+            background-color: grey;
+            color: white;
+        }
+    </style>
+
+</head>
+<body class="example">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <div class="example" id="b">
+        <nav id="main1">
+            <input type="checkbox" id="check" />
+            <label for="check" class="checkbtn">
+                <i class="fa fa-bars"></i>
+            </label>
+            <label class="logo">Dehradun</label>
+            <ul>
+                <li><a id="imgNav" style="cursor: pointer;font-size: 16px;"><i class="fas fa-globe-asia"></i>&nbsp;Image</a></li>
+                <li><a id="bookmamrkNav" style="cursor:pointer; font-size:16px;"><i class="fas fa-bookmark"></i>&nbsp;Bookmark</a></li>
+                <li><a id="cNav" style="cursor: pointer;font-size:16px;"><i class="fas fa-map-marked-alt"></i>&nbsp;Coordinates</a></li>
+                <li><a id="identifyNav" style="cursor: pointer;font-size: 16px;"><i class="fas fa-map-marked-alt"></i>&nbsp;Identify</a></li>
+                <li><a id="preDefNav" style="cursor: pointer; font-size: 16px;display:none" ;><i class="fas fa-question-circle"></i>&nbsp;Query</a></li>
+                <li><a onclick="document.getElementById('adv').style.display='block'" id="as" style="cursor: pointer; font-size: 16px;"><i class="fas fa-chart-area"></i>&nbsp;AdSearch</a></li>
+                <li><a id="logoutNav" style="cursor: pointer; font-size: 16px;"><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a></li>
+            </ul>
+        </nav>
+        <div id="iframeHolder">
+
+        </div>
+        <div id="AdvanceSearch" style="display:none"></div>
+
+        <a id="blinkLayer" style="display:none;">Logout</a>
+
+        <div id="sidenav3" style="margin-top: 110px;" }}>
+            <div class="btn-area"  id="fun3">
+                <i class="fas fa-layer-group" id="arrowright" aria-hidden="true"
+                   style="color: white"></i>
+            </div>
+            <div style="background-color:#0082e6;color: white;padding: 11px" id="layers">
+                LAYERS
+            </div>
+            <div style="background-color: white;padding: 5px">
+                <a id="allLayerOff"
+                   style="pointer-events: auto;color: #6e6f6e; border-right: 2px solid lightgray; padding-right: 5px;">
+                    All
+                    Layers Off
+                </a>
+
+                <a id="resetLayer" target="_blank" style="color: #6e6f6e;">Reset</a>
+            </div>
+            <div style="background-color: #f5f5f5;height: 94%;">
+                <div style="margin-left: 10px; padding: 3px">
+                </div>
+                <div style="overflow: scroll; height: 68%; margin: 6px; background-color: white">
+
+                    <details>
+                        <summary>Dehradun Image</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="radio" id="satelliteradio" name="mapimage" value="satellite" />
+                        <label for="male">Satellite</label><br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="radio" id="osmradio" name="mapimage" value="osm" />
+                        <label for="female">OSM</label><br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="radio" id="gujaratradio" name="mapimage" value="gujarat Image" />
+                        <label for="other">Basemap</label>
+                    </details>
+
+                    <details id="detailAdministraticeBoundary">
+                        <summary><input type="checkbox" id="adBoundary" />Administrative Boundary</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="bMuniciple" />Boundary Municiple<br>
+                    </details>
+
+                    <details id="detailBuilding">
+                        <summary><input type="checkbox" id="buildings" />Buildings</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="sBuildings" />State Government Buildings<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="cBuildings" />Central Government Buildings<br>
+                    </details>
+                    <details id="detailStormWater">
+                        <summary><input type="checkbox" id="covidCenterCheckBox" />Storm Water</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="dNetwork" />Drainage Network<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="stwboundary" />STW Catchment Boundary<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="stwpoint" />STW Point<br>
+                    </details>
+                    <details id="detailGreenArea">
+                        <summary><input type="checkbox" id="greenArea" />Green Area</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="farmHouse" />Farm House<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="forest" />Forest<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="gArea" />Green Areas<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="agriculture" />Agriculture<br>
+                    </details>
+                    <details id="detailRoad">
+                        <summary><input type="checkbox" id="road" />Road</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="petrolPump" />Petrol Pumps<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="busDepot" />Bus Depot<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="tJun" />Traffic Junction<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="bridges" />Bridges and Flyover<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="tIsland" />Traffic Island<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="parking" />Parking<br>
+                    </details>
+                    <details id="detailBankingAndPostalFacility">
+                        <summary><input type="checkbox" id="bfac" />Banking and Postal Facility</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="bbanks" />Banks<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="bpf" />Post Offices<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="batms" />ATMs<br>
+                    </details>
+
+                    <details id="detailWaterSupply">
+                        <summary><input type="checkbox" id="wSupply" />Water Supply</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="wtot" /> Water Overhead Tank<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="wwtp" />Water Treatment Plant<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="wotl" />Water Overhead Tank Landmark<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="wwp" />Water Pipeline<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="wwsp" />Water Supply Point<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="wt" />Tubewells<br>
+                    </details>
+                    <details id="detailStreetLight">
+                        <summary><input type="checkbox" id="st1" />Streetlight</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="st2" />streetlight<br>
+                    </details>
+                    <details id="detailSewerage">
+                        <summary><input type="checkbox" id="sewerage" />Sewerage</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="cToilet" />Community Toilets<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="pToilet" />Public Toilets<br>
+                    </details>
+
+                    <details id="detailRailway">
+                        <summary><input type="checkbox" id="rway" />Railway</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="rLine" />Railway Line<br>
+                    </details>
+
+                    <details id="detailEmeServices">
+                        <summary><input type="checkbox" id="eServices" />Emergency Services</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="eFireStations" />Fire Stations<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="ePoliceStations" />Police Stations<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="ePoliceChowki" />Police Chowki<br>
+                    </details>
+
+                    <details id="detailEducation">
+                        <summary><input type="checkbox" id="edu" />Education</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="eduPri" />Primary<br>
+                    </details>
+                    <details id="detailSolidWasteMan">
+                        <summary><input type="checkbox" id="swm" />Solid Waste Management</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="swmContainer" />SWM Container<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="swmTrStation" />SWM Transfer Station<br>
+                    </details>
+
+                    <details id="detailMedicalServices">
+                        <summary><input type="checkbox" id="mServices" />Medical Services</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="mBloodbank" />Bloodbank<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="mClinik" />Clinik<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="mHomeopathic" />Homeopathic<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="mHospital" />Hospitals<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="mMedStore" />Medical Store<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="mSurStore" />Surgical Shop<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="mVeterinaryClinik" />Veterinary Cliniks<br>
+                    </details>
+
+                    <details id="detailAreaBasedDevelopment">
+                        <summary><input type="checkbox" id="abd" />Area Based Development</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="abdArea" />ABD Area<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="abdWardBound" />ABD Ward Boundary<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="abdConnDrain" />ABD Connectivity Drain<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="abdGreenBuilding" />ABD Green Building<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="abdMddaPark" />ABD MDDA PArk<br>
+                    </details>
+
+                    <details id="detailCovid">
+                        <summary><input type="checkbox" id="covid" />Covid</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="isolationWard" />Isolation Ward<br>
+                    </details>
+
+                    <details id="detailOthers">
+                        <summary><input type="checkbox" id="others" />Others</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="otherEdu" />Education<br>
+                    </details>
+
+                    <details id="detailScada">
+                        <summary><input type="checkbox" id="scada" />SCADA</summary>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="scadaTubewell" />Tubewell<br>
+                        &ensp;&ensp;&ensp;&ensp;<input type="checkbox" id="scadaReservoir" />Reservoir<br>
+                    </details>
+
+                </div>
+
+                <div id="info" style="display: none;"></div>
+                <label for="track">
+                    Track position
+                    <input id="track" type="checkbox" />
+                </label>
+                <p style="display: none;">
+                    position accuracy : <code id="accuracy"></code>&nbsp;&nbsp;
+                    altitude : <code id="altitude"></code>&nbsp;&nbsp;
+                    altitude accuracy : <code id="altitudeAccuracy"></code>&nbsp;&nbsp;
+                    heading : <code id="heading"></code>&nbsp;&nbsp;
+                    speed : <code id="speed"></code>
+                </p>
+                <div id="bookmarkHeading" style="padding: 8px;">
+                </div>
+
+                <div style="height: 70px; overflow-y: scroll">
+                    <table>
+                        <tbody id="tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+        <div id="sidenav2" style="margin-top: 105px;z-index: 2">
+            <div class="btn-area" id="fun2" style="background-color: #0082e6;">
+                <i class="fas fa-arrow-left" id="arrowright"
+                   aria-hidden="true" style="color: white; font-size: 35px; padding: 5px"></i>
+            </div>
+            <div style="background-color: #0082e6; color: white; padding: 11px;" id="dashboard">
+                <i class="fa fa-bullseye" aria-hidden="true"></i> DASHBOARD
+            </div>
+            <div style="background-color:#f5f5f5; height: 100%; padding: 5px;">
+                <div style="overflow-y: scroll; max-height: 470px;">
+                    <div style="padding: 10px; background-color: white; height: 270px;">
+                        <details>
+                            <summary class="dashColor" id="aroundme">
+                                <i class="fa fa-search-plus" style="color: white;"
+                                   aria-hidden="true"></i> Around
+                                Me
+                            </summary>
+
+                            <input type="radio" id="eme" name="aroundMe" value="Emergency Services" />
+                            <label for="male">Emergency Services</label><br>
+                            <input type="radio" id="touristAttRadioBtn" name="aroundMe" value="Tourist Attraction" />
+                            <label for="male">Tourist Attraction</label><br>
+                            <input type="radio" id="fanAndEntRadioBtn" name="aroundMe" value="Fun & Entertainment" />
+                            <label for="male">Fun & Entertainment</label><br>
+                            <input type="number" id="areaforaroundme" name="areaforaroundme" placeholder="Range in meters" />
+                            <br>
+                            <div id="selHospital" style="display: none;">
+                            </div>
+                            <button id="goAroundMeBtn" style="margin-left: 0%; border: 1px solid gray; padding: 9px;">
+                                Go
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i><br>
+                            </button>
+                            <button id="clearEmeServiceBtn" style="margin-left: 5%; border: 1px solid gray; padding: 9px;">
+                                Clear
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i><br>
+                            </button> <br>
+                            <p></p>
+                        </details>
+
+                        <details id="measures">
+                            <summary class="dashColor" id="measure">
+                                <i class="fa fa-ruler" aria-hidden="true"></i> Measures
+                            </summary>
+                            <ul>
+                                <li><a id="line"><i class="fas fa-chart-line"></i>&ensp;Line</a></li>
+                                <li><a id="area"><i class="fas fa-chart-area"></i>&ensp;Area</a></li>
+                            </ul>
+                        </details>
+
+                        <details>
+                            <summary class="dashColor" id="landmarks">
+                                <i class="fa fa-university" style="color: white;"
+                                   aria-hidden="true"></i>
+                                LandMarks
+                            </summary>
+                            <div id="bird" style="height: 130px; overflow: scroll;">
+                                <input type="checkbox" id="LandATM" name="ATM" value="ATM" />ATM<br>
+                                <input type="checkbox" id="LandBank" name="Bank" value="Bank" />Bank<br>
+                                <input type="checkbox" id="LandHospital" name="Blood Bank" value="Blood Bank" />Hospital<br>
+                                <input type="checkbox" id="LandPschool" name="Bus Depot" value="Bus Depot" />Primary School<br>
+
+                            </div><br>
+                            <button id="landmarkNext" style="margin-left: 20%; border: 1px solid gray; padding: 9px;">
+                                Next
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i><br>
+                            </button>
+
+                            <button id="landmarkClear" style="margin-left: 2%; border: 1px solid gray; padding: 9px">
+                                Clear
+                                <i class="fa fa-trash" aria-hidden="true"></i><br>
+                            </button>
+
+                            <div id="lnext">
+                                <br>
+                                <div id="Lzid">
+                                    Zone<br>
+                                    <select class="txtBox" name="zone" id="AreaSelect" style="width: 100%;">
+                                        <option value="select">--Select Zone--</option>
+                                        <option value="Rājpur">1. Rajpur</option>
+                                        <option value="Kalanga">2. Kalanga</option>
+                                        <option value="Dehradun">3. Dehradun</option>
+                                    </select>
+                                </div>
+                                <br>
+                                <button id="landmarkGo" style="margin-left: 60%; border: 1px solid gray; padding: 9px;">
+                                    Go
+                                    <i class="fa fa-arrow-right" aria-hidden="true"></i><br>
+                                </button>
+                            </div>
+                            <br>
+                            <div id="LandShow">
+
+                            </div>
+
+                        </details>
+
+                        <details id="findLocation">
+                            <summary class="dashColor" id="finddirection">
+                                <i class="fa fa-location-arrow" aria-hidden="true"></i> Find
+                                Direction
+                            </summary>
+                        </details>
+                        <details>
+                            <summary class="dashColor" id="languageDashboard">
+                                <i class="fa fa-language" aria-hidden="true"></i> Language
+                            </summary>
+                            <div id="google_translate_element"></div>
+                        </details>
+
+                        <details id="findLocation">
+                            <summary class="dashColor" id="realtymdashboard">
+                                <i class="fa fa-home" aria-hidden="true"></i> Real Time
+                                Dashboard
+                            </summary>
+                            <div id="realTimeDashboard">
+                                Group<br>
+                                <select name="zone" id="selectgroup" style="width: 100%;" onchange="piechart()">
+                                    <option value="selectGep">--Select Group--</option>
+                                    <option value="Bank">1-Banking And Postal Facility</option>
+                                    <option value="Building">2-Building</option>
+
+                                </select>
+
+                            </div><br>
+                        </details>
+                        <div id="coorNavDashboard">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="uparrowbtn" style="z-index: 988;">
+            <button id="funbottom" style="width: auto; margin-left: 43%; visibility: visible; border: 2px solid #0082e6;">
+
+                <i class="fa fa-arrow-circle-up" aria-hidden="true" id="ub" style="font-size: large;"></i>
+            </button><br>
+            <div style="border: 3px solid #0082e6;" id="btm">
+
+                <button id="homeNav" class="btmbtn"><i class="fas fa-home"></i></button>
+                <button class="btmbtn" id="themeNav" onClick="plus()"><i class="fas fa-adjust"></i></button>
+                <button class="btmbtn" id="panNav" onClick="a()"><i class="fas fa-hand-paper"></i></button>
+                <button class="btmbtn" id="printNav"><i class="fas fa-print"></i></button>
+                <button class="btmbtn" id="prevNav"><i class="fas fa-undo"></i></button>
+                <button class="btmbtn" id="nextNav"><i class="fas fa-redo"></i></button>
+                <button class="btmbtn" id="plus"><i class="fas fa-plus-circle"></i></button>
+                <button class="btmbtn" id="minus"><i class="fas fa-minus-circle"></i></button>
+                <button class="btmbtn" id="clearSelection"><i class="fas fa-eye-slash"></i></button>
+
+                <button class="btmbtn" id="helpNav" onclick="helpNavClick()"><i class="fas  fa-hands-helping"></i></button>
+
+                <button class="btmbtn" id="stopBlinkNav"><i class="fas fa-unlink"></i></button>
+
+            </div>
+        </div>
+
+        <div id="map" class="map" style="height: 625px;"></div>
+
+        <div id="popup" class="ol-popup" style="display: none;">
+            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+            <div id="popup-content"></div>
+        </div>
+
+
+
+
+
+        <dialog id="dialog1" style="top: 35%; padding: 0; width: 500px; height: 305px; z-index: 7;">
+            <header style="background-color: #556080; color: white; padding: 5px;">
+                <label style="font-weight: bold;">Find Location</label>
+                <button id="close" style="margin-left: 70%; background-color: #f44336; color: white;" }}><i class="fa fa-times" aria-hidden="true"></i></button>
+            </header>
+            <section style="padding:9px;">
+                <label>Location From</label><br>
+                <label id="l1"><i class="fa fa-map-marker" aria-hidden="true" style="color: blue;"></i></label>&ensp;<input class="txtBox" type="text" placeholder="Click on Map" id="cor1" style="width: 95%;" /><br>
+                <label>Location To</label><br>
+                <label id="l2"><i class="fa fa-map-marker" aria-hidden="true" style="color: red;"></i></label>&ensp;<input class="txtBox" type="text" id="cor2" placeholder="Click on Map" style="width: 95%;" /> <br> <br>
+                <button id="direction" style="margin-left: 10%; border: 1px solid gray; padding: 8px; width: 40%;">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    Direction
+                </button>
+                <button id="flClear" style="margin-left: 2%; border: 1px solid gray; padding: 8px; width: 40%;">
+                    <i class="fa fa-trash" aria-hidden="true"></i>Clear
+                </button>
+            </section>
+            <p></p>
+        </dialog>
+
+        @*{/*<div id="popup" class="ol-popup" style="display: none;">
+            */}
+            {/*    <a href="#" id="popup-closer" class="ol-popup-closer"></a>*/}
+            {/*    <div id="popup-content"></div>*/}
+            {/*
+        </div>*/}*@
+
+
+        <dialog id="dialog2" style="top: 35%; padding: 8px; width: 350px; height: 200px; z-index: 7; border: black; border-radius: 10px;">
+            <section style="padding:9px; text-align: center;">
+                <i class="fas fa-exclamation-circle fa-3x" style="color: goldenrod;"></i><br> <br>
+                Please Click on Map to Identify/Point Your Location
+                <br> <br>
+                <button id="dia2Close"
+                        style="margin-left: 0%; padding: 8px; width: 20%; background-color: #f44336; color: white; font-size: 20px;">
+                    Ok
+                </button>
+            </section>
+            <p></p>
+        </dialog>
+
+
+        <dialog style="top: 15%; height: 390px; padding: 0; width: 500px; z-index:7;" id="pieChartDialog">
+            <header style="background-color: #556080; color: white; padding: 3px;">
+                <label style="font-weight: 500; margin-bottom: 0px;">PieChart</label>
+                <button id="closePie" onclick="pieDialogClose()" style="margin-left: 75%; background-color: #f44336; color: white;"><i class="fa fa-times"></i></button>
+            </header>
+            <section style="padding: 5px;">
+                <div id="piechart" style="width: 100%; height: 300px;">
+
+                </div>
+            </section>
+        </dialog>
+
+        <dialog style="top: 30%; padding: 0; width: 500px; height:300px; z-index: 7;" id="forbookmark">
+            <header style="background-color: #556080; color: white; padding: 3px;">
+                <label style="font-weight: 500; margin-bottom: 0px;">Add Bookmark</label>
+                <button id="closeBookmark" style="margin-left: 70%; background-color: #f44336; color: white"><i class="fa fa-times"></i></button>
+            </header>
+            <section style="padding: 5px;">
+                <label id="locfrom1">Name</label>
+                <input type="text" placeholder="Enter Name" class="txtBox" id="NameBook" style="width: 98%;" /><br>
+                <label>Description</label>
+                <input type="text" class="txtBox" placeholder="Enter Description" style="width: 98%;" id="DescBook" /><br> <br>
+                <button style="margin-left: 10%; border: 1px solid gray; padding: 8px; width: 40%;" id="AddBook">
+                    <i class="fas fa-directions" aria-hidden="true"></i>
+                    Add
+                </button>
+                <button style="margin-left: 2%; border:1px solid gray; padding: 8px; width: 40%;" id="clearBookmark">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    Clear
+                </button>
+            </section>
+        </dialog>
+
+        <dialog id="myFirstDialog" style="top: 35%; height: 300px; padding: 0;width: 500px; z-index: 7;">
+            <header style="background-color: #556080; color:white; padding: 5px;">
+                <label style="font-weight: 500;">Coordinates</label>
+                <button id="Hide2" style="margin-left: 72%; background-color: #f44336; color: white;"> <i class="fa fa-times" aria-hidden="true"></i></button>
+            </header>
+            <section style="padding: 9px;">
+                <label>Latitude</label><br>
+                <label id="cDia1"><i class="fa fa-map-marker" aria-hidden="true" style="color: blue;"></i></label>&ensp;<input class="txtBox" type="text" placeholder="Click on Map" id="Lati" style="width: 95%;" /><br>
+                <label>Longitude</label><br>
+                <label id="l2"><i class="fa fa-map-marker" aria-hidden="true" style="color: red;"></i></label>&ensp;<input class="txtBox" type="text" id="Long" placeholder="Click on Map" style="width: 95%;" /><br> <br>
+                <button id="Search" style="margin-left: 30%; border: 1px solid gray; padding: 8px; width: 40%;">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    Search
+                </button>
+            </section>
+            <p></p>
+        </dialog>
+
+        <div id="ShowCoordinatesDetails" style="background-color: white; position: absolute; z-index: 5; top: 97%; left: 89%;">
+
+
+        </div>
+
+
+        <div id='adv' style=" width: 100%; z-index: 8; height: 500px; position: absolute; top: 15%; display: none; left: 25% ">
+            <div style=" width: 50%; background-color: white">
+                <button style="background-color: red; outline: 0; border: 0; float: right;height:30px" id="advcls"><i class="fa fa-times"></i></button>
+                <div id='advs'>Advanced Search</div>
+                <div id='nextadvs'>
+                    <button id='btn1' class='btnA' style=" margin-left: 1%">Advance Search</button>
+                    <button id='btn2' class='btnA' style=" margin-left: 0">Result</button>
+                </div>
+                <div id='d1' style="background-color: white">
+                    <br />
+                    <form method='post' style="padding-left: 1%">
+                        <p style=" font-size: 20px">Select Layer</p>
+                        <select style="font-size: 15px; width: 100%; height: 25px" name="layer" id="layer">
+                            <option>--Select Layer--</option>
+                            <option value="sgb">Banks</option>
+                            <option value="cgb">Petrol Pumps</option>
+                            <option value="pri">Primary Schools</option>
+                            <option value="clg">Farm House</option>
+                        </select>
+                        <br /><br />
+                        <button type="button" style="background-color:#0082e6;color:white;" id="apply">Apply</button>
+                    </form>
+                    <br />
+                </div>
+                <div id='d2' style="background-color: white; display: none; overflow-y: scroll; height: 350px">
+                    <br />
+                    <center><input type="text" onKeyUp="filterFunction()" placeholder="Search By Names" id="sinput" style=" text-align: center; font-size: 20px; margin: auto" /></center>
+                    <br /><br />
+                    <table id="tbl1" width="80%" border="1" rules="all" align="center">
+
+                        <tr>
+                            <th>Sr No.</th>
+                            <th>Zone No.</th>
+                            <th>Zone Name</th>
+                            <th>Feature Name</th>
+                        </tr>
+
+                    </table>
+                    <br />
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="~/js/map2.js"></script>
+
+    <script type="text/javascript">
+        @*$(function () {
+            $('#AdvanceSearch').click(function () {
+                $('#iframeHolder').css("display", "block");
+                if (!$('#iframe').length) {
+                    $('#iframeHolder').html('<div style="margin-left:10%;margin-right:30%;z-index: 3;position: absolute;text-align: center;"><div><input type="button" onClick="blnk()" style="margin-left:80%" value="Blink" class="btn btn-success"></input><input type="button" onClick="clso()" style="margin-left:3%"  value="Close" class="btn btn-danger"></input></div><iframe id="iframe" src="@Url.Action("AdvanceSearch","Home")" width="700" height="300" style="z-index:10;position:absolute,align-item:center" id="IframeA"></iframe></div>');
+                }
+            });
+        });
+
+        function clso() {
+            $('#iframeHolder').css("display", "none");
+        }
+        function blnk() {
+            $('#blinkLayer').trigger('click');
+            document.getElementById("blinkLayer").click();
+        }*@
+
+
+        var panID = false;
+        function a() {
+            if (panID) {
+                document.getElementById("map").style.cursor = "auto";
+                panID = false;
+            } else {
+                document.getElementById("map").style.cursor = "grab";
+                panID = true;
+            }
+        }
+        var themeFlag = false;
+        function plus() {
+            if (themeFlag) {
+                document.getElementById('main1').style.backgroundColor = "#0082e6";
+                document.getElementById('fun2').style.backgroundColor = "#0082e6";
+                document.getElementById('layers').style.backgroundColor = "#0082e6";
+                document.getElementById('fun3').style.backgroundColor = "#0082e6";
+                document.getElementById('dashboard').style.backgroundColor = "#0082e6";
+                document.getElementById('aroundme').style.backgroundColor = "#0082e6";
+                document.getElementById('measure').style.backgroundColor = "#0082e6";
+                document.getElementById('landmarks').style.backgroundColor = "#0082e6";
+                document.getElementById('finddirection').style.backgroundColor = "#0082e6";
+                document.getElementById('realtymdashboard').style.backgroundColor = "#0082e6";
+                document.getElementById('homeNav').style.backgroundColor = "white";
+                document.getElementById('homeNav').style.color = "#0082e6";
+                document.getElementById('panNav').style.backgroundColor = "white";
+                document.getElementById('panNav').style.color = "#0082e6";
+                document.getElementById('printNav').style.backgroundColor = "white";
+                document.getElementById('printNav').style.color = "#0082e6";
+                document.getElementById('prevNav').style.backgroundColor = "white";
+                document.getElementById('prevNav').style.color = "#0082e6";
+                document.getElementById('nextNav').style.backgroundColor = "white";
+                document.getElementById('nextNav').style.color = "#0082e6";
+                document.getElementById('plus').style.backgroundColor = "white";
+                document.getElementById('plus').style.color = "#0082e6";
+                document.getElementById('minus').style.backgroundColor = "white";
+                document.getElementById('minus').style.color = "#0082e6";
+                document.getElementById('clearSelection').style.backgroundColor = "white";
+                document.getElementById('clearSelection').style.color = "#0082e6";
+
+                document.getElementById('themeNav').style.color = "#0082e6";
+                document.getElementById('themeNav').style.backgroundColor = "white";
+
+                document.getElementById('stopBlinkNav').style.color = "#0082e6";
+                document.getElementById('stopBlinkNav').style.backgroundColor = "white";
+
+                document.getElementById('helpNav').style.backgroundColor = "white";
+                document.getElementById('helpNav').style.color = "#0082e6";
+
+                document.getElementById('btm').style.backgroundColor = "white";
+                document.getElementById('btm').style.borderColor = "#0082e6";
+
+                document.getElementById('languageDashboard').style.backgroundColor = "#0082e6";
+                // document.getElementById('languageDashboard').style.backgroundColor = "white";
+                // document.getElementById('languageDashboard').style.borderColor = "#0082e6";
+                themeFlag = false;
+            } else {
+                document.getElementById('main1').style.backgroundColor = "black";
+                document.getElementById('fun2').style.backgroundColor = "black";
+                document.getElementById('layers').style.backgroundColor = "black";
+                document.getElementById('fun3').style.backgroundColor = "black";
+                document.getElementById('dashboard').style.backgroundColor = "black";
+                document.getElementById('aroundme').style.backgroundColor = "black";
+                document.getElementById('measure').style.backgroundColor = "black";
+                document.getElementById('landmarks').style.backgroundColor = "black";
+                document.getElementById('finddirection').style.backgroundColor = "black";
+                document.getElementById('realtymdashboard').style.backgroundColor = "black";
+                document.getElementById('homeNav').style.backgroundColor = "black";
+                document.getElementById('homeNav').style.color = "white";
+                document.getElementById('panNav').style.backgroundColor = "black";
+                document.getElementById('panNav').style.color = "white";
+                document.getElementById('printNav').style.backgroundColor = "black";
+                document.getElementById('printNav').style.color = "white";
+                document.getElementById('prevNav').style.backgroundColor = "black";
+                document.getElementById('prevNav').style.color = "white";
+                document.getElementById('nextNav').style.backgroundColor = "black";
+                document.getElementById('nextNav').style.color = "white";
+                document.getElementById('plus').style.backgroundColor = "black";
+                document.getElementById('plus').style.color = "white";
+                document.getElementById('minus').style.backgroundColor = "black";
+                document.getElementById('minus').style.color = "white";
+                document.getElementById('clearSelection').style.backgroundColor = "black";
+                document.getElementById('clearSelection').style.color = "white";
+                document.getElementById('btm').style.backgroundColor = "black";
+                document.getElementById('btm').style.borderColor = "black";
+
+                document.getElementById('languageDashboard').style.backgroundColor = "black";
+                // document.getElementById('languageDashboard').style.backgroundColor = "black";
+                // document.getElementById('languageDashboard').style.borderColor = "black";
+
+                document.getElementById('stopBlinkNav').style.color = "white";
+                document.getElementById('stopBlinkNav').style.backgroundColor = "black";
+
+                document.getElementById('themeNav').style.backgroundColor = "black";
+                document.getElementById('themeNav').style.color = "white";
+
+                document.getElementById('helpNav').style.backgroundColor = "black";
+                document.getElementById('helpNav').style.color = "white";
+                themeFlag = true;
+            }
+        }
+    </script>
+
+
+</body>
+</html>

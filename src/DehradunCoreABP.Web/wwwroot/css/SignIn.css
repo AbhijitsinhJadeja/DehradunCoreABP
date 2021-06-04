@@ -1,0 +1,108 @@
+﻿#backimg {
+    width: 30%;
+    margin-left: 1%;
+}
+
+#signupdata {
+    visibility: visible;
+}
+
+#signupdataresonsive {
+    visibility: hidden;
+}
+
+@media (max-width: 952px) {
+
+    #signupdata {
+        visibility: hidden;
+    }
+
+    #signupdataresonsive {
+        visibility: visible;
+        display:block;
+    }
+
+    #signupdataresonsive {
+        position: absolute;
+        margin-top: 500px;
+        visibility: visible;
+    }
+
+    #backimg {
+        visibility: hidden;
+        position: absolute;
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 0px;
+        height: 500px;
+        z-index: 1;
+    }
+
+    #backtext {
+        visibility: hidden;
+    }
+
+    label.logo {
+        font-size: 30px;
+        padding-left: 50px;
+    }
+
+    nav ul li a {
+        font-size: 16px;
+        color: white;
+        z-index: 4;
+    }
+}
+
+@media (max-width: 858px) {
+    .checkbtn {
+        display: block;
+    }
+    #signupdataresonsive {
+        visibility: visible;
+        display: block;
+    }
+    ul {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: rgb(211, 208, 208);
+        top: 80px;
+        left: -100%;
+        text-align: center;
+        transition: all .5s;
+    }
+
+    nav ul li {
+        display: block;
+        margin: 50px 0;
+        line-height: 30px;
+    }
+
+        nav ul li a {
+            font-size: 20px;
+            color: black;
+            z-index: 4;
+        }
+
+    a:hover,
+    a.active {
+        background: none;
+        /* color: #0082e6; */
+        color: black;
+        z-index: 5;
+    }
+
+    #check:checked ~ ul {
+        left: 0;
+        z-index: 6;
+    }
+}
+#btn {
+    color: white;
+    /* border-radius:8px; */
+    margin-top: 3%;
+    background-color: #86bc42;
+    border-radius: 30px;
+    padding: 1% 5px;
+}

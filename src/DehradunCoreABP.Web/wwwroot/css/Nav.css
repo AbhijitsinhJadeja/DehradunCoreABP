@@ -1,0 +1,35 @@
+﻿#backimg {
+    width: 30%;
+    margin-left: 1%;
+}
+
+#signupdata {
+    visibility: visible;
+}
+
+body {
+    margin: 0;
+}
+
+#signupdataresonsive {
+    visibility: hidden;
+}
+
+.hea {
+    background: white;
+    color: grey;
+    padding: 15px;
+    box-shadow: 10px 10px 5px rgb(212, 211, 211);
+}
+
+.dim {
+    height: 450px;
+    width: 40%;
+}
+
+.bg {
+    background-image: url('../img/aboutimg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
